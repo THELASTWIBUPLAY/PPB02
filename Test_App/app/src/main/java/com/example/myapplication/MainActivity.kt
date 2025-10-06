@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.media.session.MediaSession.Token
 import android.os.Bundle
 import android.util.Log
@@ -99,10 +100,27 @@ class MainActivity : AppCompatActivity() {
             .addOnCompleteListener(this) {task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Login Berhasil", Toast.LENGTH_LONG).show()
+                    toMymyPage()
                 } else {
                     Toast.makeText(this, "Login Gagal", Toast.LENGTH_SHORT).show()
                 }
             }
     }
 
+    fun isAuthenticated(): Boolean {
+        return auth.currentUser != null
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (isAuthenticated()) {
+            toMymyPage()
+        }
+    }
+
+    private fun toMymyPage() {
+        val intent = Intent(this, MymyActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 }
