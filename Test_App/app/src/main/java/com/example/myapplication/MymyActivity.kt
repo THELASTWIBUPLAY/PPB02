@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -12,64 +13,55 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.adapter.Mymyadapter
 import com.example.myapplication.databinding.ActivityMymyBinding
 import com.example.myapplication.usecase.Mymyusecase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MymyActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMymyBinding
-    private lateinit var mymyusecase: Mymyusecase
-    private lateinit var mymyadapter: Mymyadapter
-
+    private lateinit var adapter: Mymyadapter
+    private val todoUseCase = Mymyusecase()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityMymyBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-
-        mymyusecase = Mymyusecase()
-//        siapkan kebutuhan recyclerciew terlebih dahulu
-        setupRecyclerView()
 
 
-//        inisiasi mengambil data dari firestore
-        initializeData()
+        adapter = Mymyadapter(mutableListOf())
+        binding.container.layoutManager = LinearLayoutManager(this)
+        binding.container.adapter = adapter
 
+
+        loadTodos()
+
+        registerEvents()
     }
 
-    private fun setupRecyclerView() {
-        mymyadapter = Mymyadapter(mutableListOf())
-        binding.container.apply {
-            adapter = mymyadapter
-            layoutManager = LinearLayoutManager(this@MymyActivity)
+    private fun registerEvents() {
+        binding.TombolCreateMymy.setOnClickListener{
+            val intent = Intent(this, CreateMymyActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 
-    private fun initializeData() {
-        lifecycleScope.launch {
-            // sembunyikan tambilan recyclerview terlebih dahulu dan tampilkan ui loading
-            binding.container.visibility = View.GONE
-            binding.uiLoading.visibility = View.VISIBLE
+    private fun loadTodos() {
+        binding.uiLoading.visibility = View.VISIBLE
 
+        CoroutineScope(Dispatchers.IO).launch {
             try {
-                //  ambil data dariu firebase
-                var mymyList = mymyusecase.getMymy()
-
-                // jika sudah mendapatkan data dan tidak ada error tampilkan kembali recyclerview dan sembunyikan ui loading
-                binding.uiLoading.visibility = View.GONE
-                binding.container.visibility = View.VISIBLE
-
-                // update data yang ada di adapter
-                mymyadapter.updateData(mymyList)
-
+                val todos = todoUseCase.getMymy()
+                withContext(Dispatchers.Main) {
+                    adapter.updateData(todos)
+                    binding.uiLoading.visibility = View.GONE
+                }
             } catch (e: Exception) {
-                Toast.makeText(this@MymyActivity, e.message, Toast.LENGTH_SHORT).show()
+                withContext(Dispatchers.Main) {
+                    binding.uiLoading.visibility = View.GONE
+                }
             }
         }
-
     }
 }

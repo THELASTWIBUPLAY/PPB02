@@ -61,37 +61,28 @@ class MainActivity : AppCompatActivity() {
     fun prepareRequest(): GetCredentialRequest {
         val serverClientId = "823392056885-7vtes61687age51t6267q659uaru6tt4.apps.googleusercontent.com"
 
-        val googleIdOption = GetGoogleIdOption
-            .Builder()
+        val googleIdOption = GetGoogleIdOption.Builder()
             .setFilterByAuthorizedAccounts(false)
             .setServerClientId(serverClientId)
             .build()
 
-        val request = GetCredentialRequest
-            .Builder()
+        return GetCredentialRequest.Builder()
             .addCredentialOption(googleIdOption)
             .build()
-
-        return request
     }
 
-    suspend fun loginByGoogle(request: GetCredentialRequest) {
+    private suspend fun loginByGoogle(request: GetCredentialRequest) {
         try {
-            val result = credentialManager.getCredential(
-                context = this,
-                request = request
-            )
+            val result = credentialManager.getCredential(context = this, request = request)
             val credential = result.credential
             val idToken = GoogleIdTokenCredential.createFrom(credential.data)
 
             firebaseLoginCallback(idToken.idToken)
-
         } catch (exc: NoCredentialException) {
-            Toast.makeText(this, "Login gagal : " + exc.message, Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Login gagal: ${exc.message}", Toast.LENGTH_LONG).show()
         } catch (exc: Exception) {
-            Toast.makeText(this, "Login gagal : " + exc.message, Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Login gagal: ${exc.message}", Toast.LENGTH_LONG).show()
         }
-
     }
 
     fun firebaseLoginCallback(idToken: String) {
@@ -107,13 +98,9 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    fun isAuthenticated(): Boolean {
-        return auth.currentUser != null
-    }
-
     override fun onStart() {
         super.onStart()
-        if (isAuthenticated()) {
+        if (auth.currentUser != null) {
             toMymyPage()
         }
     }
