@@ -45,4 +45,47 @@ class Mymyusecase {
             throw Exception(exc.message)
         }
     }
+
+    suspend fun deleteMymy(id: String) {
+        try {
+            db.collection("mymy")
+                .document(id)
+                .delete()
+                .await()
+        } catch (exc: Exception) {
+            throw Exception(exc.message)
+        }
+    }
+
+    suspend fun getMymy(id: String): Mymy? {
+        val data = db.collection("mymy")
+            .document(id)
+            .get()
+            .await()
+
+        if (data.exists()) {
+            return Mymy(
+                id = data.id,
+                title = data.getString("title").toString(),
+                description = data.getString("description").toString()
+            )
+        }
+        return null
+    }
+
+    suspend fun updateMymy(mymy: Mymy) {
+        val payload = hashMapOf(
+            "title" to mymy.title,
+            "description" to mymy.description
+        )
+
+        try {
+            db.collection("mymy")
+                .document(mymy.id)
+                .set(payload)
+                .await()
+        } catch (exc: Exception) {
+            throw Exception(exc.message)
+        }
+    }
 }

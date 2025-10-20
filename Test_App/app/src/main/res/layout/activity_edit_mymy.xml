@@ -6,14 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
-    tools:context=".CreateMymyActivity">
+    tools:context=".EditMymyActivity">
 
     <!-- 1. Header TextView -->
     <TextView
         android:id="@+id/header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create My"
+        android:text="Edit My"
         android:textSize="30sp"
         android:textStyle="bold"
         android:textColor="@color/white"
@@ -58,10 +58,10 @@
 
     <!-- 4. Tombol Simpan -->
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/tombolTambah"
+        android:id="@+id/tombolEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Simpan Mymy Baru"
+        android:text="Simpan Mymy Edit"
         android:layout_below="@+id/til_description"
         android:layout_marginTop="32dp"
         android:paddingVertical="12dp"

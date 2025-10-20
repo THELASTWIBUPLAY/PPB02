@@ -13,6 +13,12 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".EditMymyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".edit_mymy_activity"
+            android:exported="false" />
+        <activity
             android:name=".CreateMymyActivity"
             android:exported="false" />
         <activity

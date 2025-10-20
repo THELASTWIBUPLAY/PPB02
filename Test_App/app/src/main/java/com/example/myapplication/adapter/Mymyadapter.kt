@@ -8,8 +8,15 @@ import com.example.myapplication.databinding.ItemMymyBinding
 import com.example.myapplication.entity.Mymy
 
 class Mymyadapter (
-    private val dataset: MutableList<Mymy>
+    private val dataset: MutableList<Mymy>,
+    private val events: MymyItemEvents,
 ) : RecyclerView.Adapter<Mymyadapter.CustomViewHolder>() {
+
+    interface MymyItemEvents {
+        fun onDelete(mymy: Mymy)
+
+        fun onEdit(mymy: Mymy)
+    }
 
     inner class CustomViewHolder(val view: ItemMymyBinding)
         :RecyclerView.ViewHolder(view.root) {
@@ -17,6 +24,15 @@ class Mymyadapter (
             fun bindData(item: Mymy) {
                 view.title.text = item.title
                 view.description.text = item.description
+
+                view.root.setOnLongClickListener{
+                    events.onDelete(mymy = item)
+                    true
+                }
+
+                view.root.setOnClickListener {
+                    events.onEdit(item)
+                }
             }
         }
 
