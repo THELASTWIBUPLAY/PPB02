@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "823392056885",
+    "project_id": "appgwej",
+    "storage_bucket": "appgwej.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:823392056885:android:350edbe419c7a0adce237c",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "823392056885-1h6t363uus07botk8h9e0hi0j4e4sf7g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication",
+            "certificate_hash": "b908b04598f2afb8b9d1bf1b13a1121d60467876"
+          }
+        },
+        {
+          "client_id": "823392056885-bhcc59si41vj7s0l77ovb7r4jb22vc2t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication",
+            "certificate_hash": "fd234625f1da6ce30d9299245d066c366f00c78e"
+          }
+        },
+        {
+          "client_id": "823392056885-qvrbfudk5iflc20gvkoe9kbh1l7ngmd1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapplication",
+            "certificate_hash": "4c88b099a05428ffb1d4dbf126d803ce5c66416c"
+          }
+        },
+        {
+          "client_id": "823392056885-7vtes61687age51t6267q659uaru6tt4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsIzMH1u9wGBmCm-mdVGq314mKQcrVm_g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "823392056885-7vtes61687age51t6267q659uaru6tt4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
